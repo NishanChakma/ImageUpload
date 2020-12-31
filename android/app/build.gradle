@@ -133,7 +133,7 @@ public class Version {
 }
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    archivesBaseName = "StraiveTask" + Version.getVersionName()
+    archivesBaseName = "StraiveTask_" + Version.getVersionName()
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
