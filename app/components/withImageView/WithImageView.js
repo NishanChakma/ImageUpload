@@ -97,6 +97,7 @@ const WithImageView = ({
           data={imageArray}
           renderItem={renderItem}
           keyExtractor={key}
+          scrollEnabled={false}
           horizontal
         />
       </View>
