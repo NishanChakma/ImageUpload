@@ -1,4 +1,4 @@
-import {types, flow} from 'mobx-state-tree';
+import {types, flow, getSnapshot} from 'mobx-state-tree';
 
 const ImageData = types.model('ImageData', {
   index: types.optional(types.number, 0),
@@ -20,6 +20,22 @@ export const ImageStore = types
       try {
         self.loading = true;
         self.imageData = [...self.imageData, {...param}]; //array addition
+      } catch (e) {
+        self.loading = false;
+        throw Error(e.message);
+      } finally {
+        self.loading = false;
+      }
+    }),
+
+    DeleteImage: flow(function* DeleteImage(param) {
+      try {
+        self.loading = true;
+        let storeData = self.imageData;
+        storeData.splice(
+          storeData.findIndex((e) => e.index === param),
+          1,
+        );
       } catch (e) {
         self.loading = false;
         throw Error(e.message);

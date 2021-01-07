@@ -16,7 +16,7 @@ const NoImageView = ({
 }) => {
   const noImageLogo = require('../../assets/noImageLogo.png');
   const onPressHandle = useCallback(() => {
-    UploadImage(ImageDataSave);
+    UploadImage(ImageDataSave, -1); //minus 1 is for to make the image array index 0
   }, []);
 
   return (

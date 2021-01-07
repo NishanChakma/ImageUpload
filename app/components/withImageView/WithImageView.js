@@ -13,7 +13,7 @@ import {getSnapshot} from 'mobx-state-tree';
 
 const WithImageView = ({
   store: {
-    imagestore: {loading, ImageDataSave, imageData}, //access mobx store
+    imagestore: {loading, ImageDataSave, imageData, DeleteImage}, //access mobx store
   },
 }) => {
   const storageData = getSnapshot(imageData);
@@ -51,11 +51,12 @@ const WithImageView = ({
 
   //image upload function
   const uploadImage = useCallback(() => {
-    UploadImage(ImageDataSave);
-  }, []);
+    let lastIndex = storageData[storageData.length - 1].index;
+    UploadImage(ImageDataSave, lastIndex);
+  }, [storageData]);
 
   const renderItem = useCallback(({item}) => {
-    return <ImageProcessing {...item} />;
+    return <ImageProcessing item={item} DeleteImage={DeleteImage} />;
   });
 
   //pagination next button function

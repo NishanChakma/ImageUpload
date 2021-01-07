@@ -5,7 +5,6 @@ import styles from './styles';
 
 const Pagination = memo(
   ({showPrev, showNext, paginationIncrease, paginationDecrease}) => {
-    console.log(showNext, showPrev);
     return (
       <>
         {showPrev && (
