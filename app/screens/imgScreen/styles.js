@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   closeButton: {
     textAlign: 'right',
     fontSize: 30,
-    color: '#fff',
+    color: '#DD0101',
     margin: 10,
   },
 });

@@ -17,20 +17,27 @@ const WithImageView = ({
   let storageData = getSnapshot(imageData);
   const [index, setIndex] = useState(0);
   const [imageArray, setImageArray] = useState([]);
+  const [showPrev, setShowPrev] = useState(false);
   const key = useCallback(() => uuidv4(), []);
   const noImageLogo = require('../../assets/noImageLogo.png');
 
-  function imageDataProcess() {
+  const imageDataProcess = useCallback(() => {
     let i,
       j,
       data,
       endPoint = 4;
-    for (i = index, j = storageData.length; i < j; i += endPoint) {
-      data = storageData.slice(i, i + endPoint);
-      break;
+    if (storageData.length < 5) {
+      data = storageData;
+      setShowPrev(false);
+    } else {
+      setShowPrev(true);
+      for (i = index, j = storageData.length; i < j; i += endPoint) {
+        data = storageData.slice(i, i + endPoint);
+        break;
+      }
     }
     setImageArray(data);
-  }
+  }, [storageData, index]);
 
   useEffect(() => {
     imageDataProcess();
@@ -45,13 +52,8 @@ const WithImageView = ({
   });
 
   const paginationIncrease = () => {
-    console.log(imageArray);
-    if (imageArray === undefined || imageArray.length < 4) {
-      alert('No more images!');
-    } else {
-      setIndex(index + 4);
-      imageDataProcess();
-    }
+    setIndex(index + 4);
+    imageDataProcess();
   };
 
   const paginationDecrease = useCallback(() => {
@@ -71,15 +73,21 @@ const WithImageView = ({
   const PrevNext = memo(() => {
     return (
       <View style={styles.bottomContainer}>
+        {showPrev && (
+          <TouchableOpacity
+            style={showPrev ? styles.leftBottomContainer : {flex: 1}}
+            onPress={paginationDecrease}>
+            <Text style={showPrev ? styles.previous : {textAlign: 'center'}}>
+              Previous
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
-          style={styles.leftBottomContainer}
-          onPress={paginationDecrease}>
-          <Text style={styles.previous}>Previous</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.rightBottomContainer}
+          style={showPrev ? styles.rightBottomContainer : {flex: 1}}
           onPress={paginationIncrease}>
-          <Text style={styles.next}>Next</Text>
+          <Text style={showPrev ? styles.next : {textAlign: 'center'}}>
+            Next
+          </Text>
         </TouchableOpacity>
       </View>
     );

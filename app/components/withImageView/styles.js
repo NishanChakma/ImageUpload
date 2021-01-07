@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   next: {
+    textAlign: 'left',
     paddingLeft: 10,
     textDecorationLine: 'underline',
   },
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
   },
   rightBottomContainer: {
     width: '50%',
+    alignContent: 'flex-start',
   },
 });
 
