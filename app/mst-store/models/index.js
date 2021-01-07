@@ -13,9 +13,7 @@ export const ImageStore = types
     loading: true,
     imageData: types.optional(types.array(ImageData), []),
   })
-  .views((self) => ({}))
   .actions((self) => ({
-    // setImgIndex: (param) => (self.imageIndex = param),
     ImageDataSave: flow(function* ImageDataSave(param) {
       try {
         self.loading = true;
@@ -31,11 +29,9 @@ export const ImageStore = types
     DeleteImage: flow(function* DeleteImage(param) {
       try {
         self.loading = true;
-        let storeData = self.imageData;
-        storeData.splice(
-          storeData.findIndex((e) => e.index === param),
-          1,
-        );
+        let a = self.imageData;
+        a = a.reduce((p, c) => (c.index !== param && p.push(c), p), []); //array delete
+        self.imageData = a;
       } catch (e) {
         self.loading = false;
         throw Error(e.message);
