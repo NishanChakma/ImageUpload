@@ -55,6 +55,7 @@ const WithImageView = ({
     UploadImage(ImageDataSave, lastIndex);
   }, [storageData]);
 
+  //flatlist render item/images
   const renderItem = useCallback(({item}) => {
     return <ImageProcessing item={item} DeleteImage={DeleteImage} />;
   });
