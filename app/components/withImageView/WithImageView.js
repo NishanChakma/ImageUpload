@@ -51,10 +51,10 @@ const WithImageView = ({
     return <ImageProcessing {...item} />;
   });
 
-  const paginationIncrease = () => {
+  const paginationIncrease = useCallback(() => {
     setIndex(index + 4);
     imageDataProcess();
-  };
+  }, [index]);
 
   const paginationDecrease = useCallback(() => {
     if (index < 4) {
