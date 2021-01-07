@@ -14,7 +14,7 @@ const WithImageView = ({
     imagestore: {loading, ImageDataSave, imageData},
   },
 }) => {
-  let storageData = getSnapshot(imageData);
+  const storageData = getSnapshot(imageData);
   const [index, setIndex] = useState(0);
   const [imageArray, setImageArray] = useState([]);
   const [showPrev, setShowPrev] = useState(false);
@@ -30,9 +30,13 @@ const WithImageView = ({
       data = storageData;
       setShowPrev(false);
     } else {
-      setShowPrev(true);
       for (i = index, j = storageData.length; i < j; i += endPoint) {
         data = storageData.slice(i, i + endPoint);
+        if (index === 0) {
+          setShowPrev(false);
+        } else {
+          setShowPrev(true);
+        }
         break;
       }
     }
@@ -54,6 +58,7 @@ const WithImageView = ({
   const paginationIncrease = useCallback(() => {
     setIndex(index + 4);
     imageDataProcess();
+    //storageData index = 0 hide prev
   }, [index]);
 
   const paginationDecrease = useCallback(() => {
