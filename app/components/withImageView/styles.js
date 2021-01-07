@@ -10,12 +10,10 @@ const styles = StyleSheet.create({
   },
   previous: {
     textAlign: 'right',
-    paddingRight: 10,
     textDecorationLine: 'underline',
   },
   next: {
     textAlign: 'left',
-    paddingLeft: 10,
     textDecorationLine: 'underline',
   },
   subContainer: {
@@ -23,7 +21,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  touchWidth: {width: '30%'},
+  touchWidth: {padding: 12},
   prevNext: {
     textAlign: 'center',
     textDecorationLine: 'underline',
@@ -42,6 +40,7 @@ const styles = StyleSheet.create({
   noImgLogo: {
     height: deviceHeight / 1.5,
     width: deviceWidth / 2,
+    justifyContent: 'flex-end',
   },
   noImgText: {
     color: '#fff',
@@ -55,7 +54,12 @@ const styles = StyleSheet.create({
   },
   imgBottomBox: {
     height: deviceHeight / 2,
-    marginTop: 30,
+    marginTop: 20,
+  },
+  uploadText: {
+    textAlign: 'center',
+    marginBottom: 15,
+    color: '#fff',
   },
   firstImgBox: {
     padding: 10,

@@ -21,6 +21,12 @@ const styles = StyleSheet.create({
   noImgLogo: {
     height: deviceHeight / 1.5,
     width: deviceWidth / 2,
+    justifyContent: 'flex-end',
+  },
+  uploadText: {
+    textAlign: 'center',
+    marginBottom: 15,
+    color: '#fff',
   },
   noImgText: {
     color: '#fff',

@@ -1,5 +1,10 @@
 import React, {useCallback} from 'react';
-import {View, Text, Image, TouchableNativeFeedback} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableNativeFeedback,
+} from 'react-native';
 import UploadImage from '../../hooks/uploadImage';
 import {withStore} from '../../mst-utils/withStore';
 import styles from './styles';
@@ -18,7 +23,9 @@ const NoImageView = ({
     <View style={styles.container}>
       <View style={styles.noImgTopBox}>
         <TouchableNativeFeedback onPress={onPressHandle}>
-          <Image style={styles.noImgLogo} source={noImageLogo} />
+          <ImageBackground source={noImageLogo} style={styles.noImgLogo}>
+            <Text style={styles.uploadText}>Upload</Text>
+          </ImageBackground>
         </TouchableNativeFeedback>
       </View>
       <View style={styles.noImgBottomBox}>

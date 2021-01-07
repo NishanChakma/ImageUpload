@@ -5,29 +5,24 @@ import styles from './styles';
 
 const Pagination = memo(
   ({showPrev, showNext, paginationIncrease, paginationDecrease}) => {
+    console.log(showNext, showPrev);
     return (
       <>
         {showPrev && (
-          <View
-            style={showPrev ? styles.subContainer : styles.leftBottomContainer}>
+          <View style={styles.subContainer}>
             <TouchableOpacity
               onPress={paginationDecrease}
               style={styles.touchWidth}>
-              <Text style={showPrev ? styles.previous : styles.prevNext}>
-                Previous
-              </Text>
+              <Text style={styles.previous}>Previous</Text>
             </TouchableOpacity>
           </View>
         )}
         {showNext && (
-          <View
-            style={
-              showNext ? styles.subContainer : styles.rightBottomContainer
-            }>
+          <View style={styles.subContainer}>
             <TouchableOpacity
               onPress={paginationIncrease}
               style={styles.touchWidth}>
-              <Text style={showPrev ? styles.next : styles.prevNext}>Next</Text>
+              <Text style={styles.next}>Next</Text>
             </TouchableOpacity>
           </View>
         )}

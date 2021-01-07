@@ -1,5 +1,5 @@
 import React, {useCallback, useState, useEffect, memo} from 'react';
-import {View, Image, FlatList} from 'react-native';
+import {View, ImageBackground, Text, FlatList} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ImageProcessing from './ImageProcessing';
 import Pagination from './pagination';
@@ -79,7 +79,9 @@ const WithImageView = ({
     <View style={styles.container}>
       <View style={[styles.imgTopBox, styles.itemCenter]}>
         <TouchableOpacity onPress={uploadImage}>
-          <Image style={styles.noImgLogo} source={noImageLogo} />
+          <ImageBackground source={noImageLogo} style={styles.noImgLogo}>
+            <Text style={styles.uploadText}>Upload</Text>
+          </ImageBackground>
         </TouchableOpacity>
       </View>
       <View style={styles.imgBottomBox}>
