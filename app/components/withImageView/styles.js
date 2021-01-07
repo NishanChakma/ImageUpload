@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     textDecorationLine: 'underline',
   },
+  prevNext: {
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
   noImgTopBox: {
     height: '90%',
     justifyContent: 'center',

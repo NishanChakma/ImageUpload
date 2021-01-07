@@ -1,5 +1,12 @@
 import React, {useCallback, useState, useEffect, memo} from 'react';
-import {View, Text, Image, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+} from 'react-native';
 import ImageProcessing from './ImageProcessing';
 import {withStore} from '../../mst-utils/withStore';
 import 'react-native-get-random-values';
@@ -11,32 +18,32 @@ import {getSnapshot} from 'mobx-state-tree';
 
 const WithImageView = ({
   store: {
-    imagestore: {loading, ImageDataSave, imageData},
+    imagestore: {loading, ImageDataSave, imageData}, //access mobx store
   },
 }) => {
   const storageData = getSnapshot(imageData);
   const [index, setIndex] = useState(0);
   const [imageArray, setImageArray] = useState([]);
   const [showPrev, setShowPrev] = useState(false);
+  const [showNext, setShowNext] = useState(true);
   const key = useCallback(() => uuidv4(), []);
   const noImageLogo = require('../../assets/noImageLogo.png');
 
+  //pagination/image render/split/show or hide button
   const imageDataProcess = useCallback(() => {
     let i,
       j,
       data,
       endPoint = 4;
+    index + 4 >= storageData.length ? setShowNext(false) : setShowNext(true);
     if (storageData.length < 5) {
       data = storageData;
       setShowPrev(false);
     } else {
       for (i = index, j = storageData.length; i < j; i += endPoint) {
         data = storageData.slice(i, i + endPoint);
-        if (index === 0) {
-          setShowPrev(false);
-        } else {
-          setShowPrev(true);
-        }
+        index === 0 ? setShowPrev(false) : setShowPrev(true);
+        data.length < 4 ? setShowNext(false) : null;
         break;
       }
     }
@@ -47,6 +54,7 @@ const WithImageView = ({
     imageDataProcess();
   }, [storageData, index]);
 
+  //image upload function
   const uploadImage = useCallback(() => {
     UploadImage(ImageDataSave);
   }, []);
@@ -55,46 +63,46 @@ const WithImageView = ({
     return <ImageProcessing {...item} />;
   });
 
+  //pagination next button function
   const paginationIncrease = useCallback(() => {
     setIndex(index + 4);
     imageDataProcess();
-    //storageData index = 0 hide prev
   }, [index]);
 
+  //pagination prev button function
   const paginationDecrease = useCallback(() => {
-    if (index < 4) {
-      alert('You are on the first page');
-      return;
-    } else {
-      setIndex(index - 4);
-      imageDataProcess();
-    }
+    setIndex(index - 4);
+    imageDataProcess();
   }, [index]);
 
+  //when app function is loading/processing data
   while (loading) {
     <Loader />;
   }
 
+  //show previous and next button
   const PrevNext = memo(() => {
     return (
-      <View style={styles.bottomContainer}>
+      <>
         {showPrev && (
-          <TouchableOpacity
-            style={showPrev ? styles.leftBottomContainer : {flex: 1}}
-            onPress={paginationDecrease}>
-            <Text style={showPrev ? styles.previous : {textAlign: 'center'}}>
-              Previous
-            </Text>
-          </TouchableOpacity>
+          <View style={showPrev ? styles.leftBottomContainer : {flex: 1}}>
+            <TouchableNativeFeedback onPress={paginationDecrease}>
+              <Text style={showPrev ? styles.previous : styles.prevNext}>
+                Previous
+              </Text>
+            </TouchableNativeFeedback>
+          </View>
         )}
-        <TouchableOpacity
-          style={showPrev ? styles.rightBottomContainer : {flex: 1}}
-          onPress={paginationIncrease}>
-          <Text style={showPrev ? styles.next : {textAlign: 'center'}}>
-            Next
-          </Text>
-        </TouchableOpacity>
-      </View>
+        {showNext && (
+          <View style={showPrev ? styles.rightBottomContainer : {flex: 1}}>
+            <TouchableNativeFeedback
+              onPress={paginationIncrease}
+              style={{backgroundColor: 'red'}}>
+              <Text style={showPrev ? styles.next : styles.prevNext}>Next</Text>
+            </TouchableNativeFeedback>
+          </View>
+        )}
+      </>
     );
   });
 
@@ -115,7 +123,9 @@ const WithImageView = ({
           horizontal
         />
       </View>
-      <PrevNext />
+      <View style={styles.bottomContainer}>
+        <PrevNext />
+      </View>
     </View>
   );
 };
