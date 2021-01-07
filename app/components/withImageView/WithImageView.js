@@ -1,13 +1,8 @@
 import React, {useCallback, useState, useEffect, memo} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-} from 'react-native';
+import {View, Image, FlatList} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import ImageProcessing from './ImageProcessing';
+import Pagination from './pagination';
 import {withStore} from '../../mst-utils/withStore';
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
@@ -75,36 +70,10 @@ const WithImageView = ({
     imageDataProcess();
   }, [index]);
 
-  //when app function is loading/processing data
+  //when app functions is loading/processing data
   while (loading) {
     <Loader />;
   }
-
-  //show previous and next button
-  const PrevNext = memo(() => {
-    return (
-      <>
-        {showPrev && (
-          <View style={showPrev ? styles.leftBottomContainer : {flex: 1}}>
-            <TouchableNativeFeedback onPress={paginationDecrease}>
-              <Text style={showPrev ? styles.previous : styles.prevNext}>
-                Previous
-              </Text>
-            </TouchableNativeFeedback>
-          </View>
-        )}
-        {showNext && (
-          <View style={showPrev ? styles.rightBottomContainer : {flex: 1}}>
-            <TouchableNativeFeedback
-              onPress={paginationIncrease}
-              style={{backgroundColor: 'red'}}>
-              <Text style={showPrev ? styles.next : styles.prevNext}>Next</Text>
-            </TouchableNativeFeedback>
-          </View>
-        )}
-      </>
-    );
-  });
 
   return (
     <View style={styles.container}>
@@ -124,7 +93,12 @@ const WithImageView = ({
         />
       </View>
       <View style={styles.bottomContainer}>
-        <PrevNext />
+        <Pagination
+          showPrev={showPrev}
+          showNext={showNext}
+          paginationIncrease={paginationIncrease}
+          paginationDecrease={paginationDecrease}
+        />
       </View>
     </View>
   );

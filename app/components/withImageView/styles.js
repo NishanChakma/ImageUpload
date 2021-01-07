@@ -18,9 +18,16 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     textDecorationLine: 'underline',
   },
+  subContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  touchWidth: {width: '30%'},
   prevNext: {
     textAlign: 'center',
     textDecorationLine: 'underline',
+    padding: 15,
   },
   noImgTopBox: {
     height: '90%',
